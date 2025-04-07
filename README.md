@@ -16,6 +16,7 @@ Requires:
   ```lua
   casette_tape 				 = {name = 'casette_tape', 			  	  	label = 'Casette Tape', 			weight = 500, 		type = 'item', 		image = 'casette_tape.png', 		unique = true, 	    useable = true, 	shouldClose = true,	   combinable = nil,   description = 'old tunes'},
 	casette_player 				 = {name = 'casette_player', 			  	label = 'Casette Player', 			weight = 500, 		type = 'item', 		image = 'casette_player.png', 		unique = true, 		useable = true, 	shouldClose = true,	   combinable = nil,   description = 'old tunes'},
+-- FOR BASE BUILDING
   ['bkr_prop_clubhouse_jukebox_01a'] = {["name"] = "bkr_prop_clubhouse_jukebox_01a", ["label"] = "Jukebox (Wall)", ["weight"] = 200, ["type"] = "item", ["image"] = "bkr_prop_clubhouse_jukebox_01a.png", ["unique"] = false, ["useable"] = true, ["shouldClose"] = true, ["combinable"] = nil, ["description"] = "Used for base building"},
   ['bkr_prop_clubhouse_jukebox_01b'] = {["name"] = "bkr_prop_clubhouse_jukebox_01b", ["label"] = "Jukebox (Floor)", ["weight"] = 200, ["type"] = "item", ["image"] = "bkr_prop_clubhouse_jukebox_01b.png", ["unique"] = false, ["useable"] = true, ["shouldClose"] = true, ["combinable"] = nil, ["description"] = "Used for base building"},
   ['bkr_prop_clubhouse_jukebox_02a'] = {["name"] = "bkr_prop_clubhouse_jukebox_02a", ["label"] = "Jukebox (Floor)", ["weight"] = 200, ["type"] = "item", ["image"] = "bkr_prop_clubhouse_jukebox_02a.png", ["unique"] = false, ["useable"] = true, ["shouldClose"] = true, ["combinable"] = nil, ["description"] = "Used for base building"},
