@@ -122,10 +122,10 @@ RegisterNetEvent('sayer-jukebox:client:PickupProp', function()
     end
 end)
 
-AddEventHandler('sayer-jukebox:hrs_access_jukebox',function(base_prop_id)
-    local entity_coords = GetEntityCoords(base_prop_id)
+AddEventHandler('sayer-jukebox:hrs_access_jukebox',function(base_prop_id, base_prop_entity)
+    local entity_coords = GetEntityCoords(base_prop_entity)
     print(tostring(entity_coords))
-    print(tostring(base_prop_id))
+    print("entity interacting with: "..tostring(base_prop_entity))
     OpenHRSMusicMenu(tostring(base_prop_id))
 end)
 
@@ -318,6 +318,46 @@ RegisterNetEvent('sayer-jukebox:CheckPockets', function(data)
     end)
 end)
 
+RegisterNetEvent('sayer-jukebox:PlayFromWhere',function(data)
+    print(tostring(data.prop))
+    local columns = {}
+    table.insert(columns, {
+        title = 'Play From Speakers', 
+        description = 'Play From Connected Speakers (if any)', 
+        event = 'sayer-jukebox:hrs_get_speakers', 
+        args = data
+    })
+    table.insert(columns, {
+        title = 'Play From Jukebox', 
+        description = 'Play From The Jukebox', 
+        event = 'sayer-jukebox:PlayTape', 
+        args = data
+    })
+    lib.registerContext({
+        id = 'jukebox_from_where_menu',
+        title = '🖭 | Play From Where?',
+        options = columns
+    })
+
+    lib.showContext('jukebox_from_where_menu')
+end)
+
+RegisterNetEvent('sayer-jukebox:PlayFromSpeakers',function(data)
+    ExecuteCommand("e atm")
+    if lib.progressCircle({duration = 1500,position = 'bottom',useWhileDead = false,canCancel = true,disable = {    car = true,},}) then 
+        TriggerServerEvent('sayer-jukebox:PlayTape',data)
+        ExecuteCommand("emotecancel")
+        ClearPedTasks(PlayerPedId()) 
+    else 
+        ClearPedTasks(PlayerPedId())
+        ExecuteCommand("emotecancel")
+        lib.notify({
+            title = 'Cancelled...',
+            description = 'You cancelled playing the tape',
+            type = 'error'
+        })
+    end
+end)
 
 RegisterNetEvent('sayer-jukebox:PlayTape',function(data)
     ExecuteCommand("e atm")

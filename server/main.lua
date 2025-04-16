@@ -7,9 +7,9 @@ local function DebugCode(msg)
     end
 end
 
-function SendNotify(src, Title, MSG, Type)
+function SendNotify(src, Title, MSG, Type, Time)
     if not Title then Title = "Jukebox" end
-    if not time then time = 5000 end
+    if not Time then Time = 5000 end
     if not Type then Type = 'success' end
     if not MSG then DebugCode("SendNotify Server Triggered With No Message") return end
     local data = {
@@ -54,6 +54,7 @@ RegisterNetEvent('sayer-jukebox:AddItem', function(item,amount)
 end)
 
 RegisterNetEvent('sayer-jukebox:PlayTape', function(data)
+    local add_to_queue = data.add_to_queue
     local isHRS = data.HRS
     local song = Config.Tapes[data.songID].Link
     local entity = data.prop
@@ -182,7 +183,7 @@ end)
 --trigger from server
 RegisterNetEvent('sayer-jukebox:UnlockSong', function(src, song_code)
     local SongCFG = Config.Tapes[song_code]
-    if not SongCFG then DebugCode("cong doesnt exist in Config.Tapes") return end
+    if not SongCFG then DebugCode("Song doesnt exist in Config.Tapes") return end
 
     local Player = QBCore.Functions.GetPlayer(src)
     if not Player then DebugCode("player not found") return end
@@ -193,12 +194,10 @@ RegisterNetEvent('sayer-jukebox:UnlockSong', function(src, song_code)
     if songsData and songsData[1] then
         local FormattedData = json.decode(songsData[1].songs)
 
-        -- Make sure it's a table
         if type(FormattedData) ~= "table" then
             FormattedData = {}
         end
 
-        -- Check if song already exists
         for _, v in ipairs(FormattedData) do
             if v == song_code then
                 DebugCode("song already discovered")
@@ -237,12 +236,10 @@ RegisterNetEvent('sayer-jukebox:UnloadSong', function(data)
     if songsData and songsData[1] then
         local FormattedData = json.decode(songsData[1].songs)
 
-        -- Make sure it's a table
         if type(FormattedData) ~= "table" then
             FormattedData = {}
         end
 
-        -- Remove song if it exists
         local removed = false
         for i, v in ipairs(FormattedData) do
             if v == song_code then
